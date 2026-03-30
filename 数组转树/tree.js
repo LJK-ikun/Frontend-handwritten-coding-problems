@@ -16,17 +16,19 @@ const arr = [
     { id: "15", name: "小涛", pid: "06", job: "运维工程师" },
   ];
 
-function toTreeHash(list) {
-    const res = []
-    let map = new Map()
-    for (const item of list) {
-        map.set(item.id, {...item, children: []})
+function toTree(arr) {
+    let res = []
+    // map
+    let myMap = new Map()
+    for (let i = 0; i < arr.length; i++) {
+        myMap.set(arr[i].id, {...arr[i], children: []})
     }
-    for(const item of list) {
-        if (item.pid && map.has(item.id)) {
-            map.get(item.pid).children.push(map.get(item.id))
+    // push
+    for (let i = 0; i < arr.length; i++) {
+        if(arr[i].pid && myMap.has(arr[i].pid)) {
+            myMap.get(arr[i].pid).children.push(myMap.get(arr[i].id));
         } else {
-            res.push(map.get(item.id))
+            res.push(myMap.get(arr[i].id))
         }
     }
     return res
